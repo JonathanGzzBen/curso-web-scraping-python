@@ -11,15 +11,17 @@ que analiza el sitio de Steam para buscar tu perfil, tus juegos,
 y su compatibilidad con Linux consultando el sitio web WineHQ.
 
 En este curso les enseñaré técnicas para obtener información
-de sitios web con diferentes estructuras. Después crearemos
-un web scraper más complejo que analizará varias páginas
-dentro de un mismo sitio web, para exportar la información a
-Excel, una base de datos o un archivo JSON.
+de sitios web con diferentes estructuras. Crearemos un web
+scraper que analizará varias páginas dentro de un mismo sitio
+web, para exportar la información a Excel, una base de datos
+o un archivo JSON.
 
 Antes de empezar me gustaría aclarar el tema de la legalidad
 de los web-scrapers.
+
 En pocas palabras, si son legales, siempre y cuando no abuses
 de ellos. Vamos a ver un ejemplo sencillo.
+
 Puedo utilizar un web scraper para que me avise cuando un
 producto de edición limitada salga a la venta, para yo mismo
 ir al sitio web y comprar dicho producto. Sin embargo, utilizar
@@ -243,12 +245,80 @@ Tener funciones genéricas que incluyan manejo de
 excepciones hace que sea más fácil y confiable
 desarrollar web-scrapers.
 
-## Almacenar la información
+#### Selectores
 
-Podemos almacenar información en cualquier forma
-que queramos, en este caso voy a hacer un script
-para obtener información de una tabla, y almacenarla
-en un archivo `.csv`, para poder verlo inmediatamente
-en Excel.
+Prácticamente todos los sitios web que visitamos
+utilizan CSS, y éste sigue algun tipo de lógica
+que podemos aprovechar para obtener los elementos
+que deseamos.
 
-## Dirigirse a otra página
+Vamos a tomar como ejemplo esta página:
+
+<http://www.pythonscraping.com/pages/warandpeace.html>
+
+En esta página, las líneas dichas por los personajes
+están en rojo, mientras que los nombres de los
+personajes están en verde. Esto se consigue gracias
+a la clase de los elementos `span`.
+
+Vamos a tomar la página como un objeto `BeautifulSoup`.
+
+```python
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
+html = urlopen('http://www.pythonscraping.com/pages/page1.html')
+bs = BeautifulSoup(html.read(), 'html.parser')
+```
+
+Podemos utilizar la función `find_all` para extraer
+una lista de los nombres y pronombres en la pagina si
+obtenemos los elementos dentro de `<span class="green"></span>`
+
+```python
+nameList = bs.find_all('span', {'class': 'green'})
+for name in nameList:
+    print(name.get_text())
+```
+
+Si lo corremos, nos muestra todos los pronombres
+en orden. `get_text()` obtiene el contenido visible
+de un tag.
+
+##### find() y find_all()
+
+Estas dos funciones son muy simlares, estas son
+sus definiciones:
+
+```python
+find_all(tag, attributes, recursive, text, limit, keywords)
+find(tag, attributes, recursive, text, keywords)`
+```
+
+En realidad, la mayor parte de las veces solo
+vas a necesitar utilizar `tag` y `attributes`.
+
+Vamos a analizarlos con mayor detalle.
+
+En el parámetro `tag` podemos pasar un string con
+el nombre de un tag, o una lista de strings con
+nombres de tags.
+
+```python
+.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+```
+
+El parámetro `attributes` toma un diccionario
+de atributos, y hace match con las tags que
+tengan los mismos atributos. Por ejemplo, esta
+función regresa los span con clase `green` o
+`red`:
+
+```python
+.find_all('span', {'class':{'green', 'red'}})
+```
+
+Estos son los dos parámetros que vamos a usar
+en la mayoría de los casos. Si utilizo otro
+parámetro en la elaboración del proyecto,
+lo explicaré en su momento.
