@@ -225,7 +225,7 @@ def getTitle(url):
     try:
         bs = BeautifulSoup(html.read(), 'html.parser')
         title = bs.body.h1
-    except Attribute Error as e:
+    except AttributeError as e:
         return None
     return title
 
