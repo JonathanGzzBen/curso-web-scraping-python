@@ -74,7 +74,7 @@ profundidad.
 Vamos a instalar BeautifulSoup utilizando PIP.
 
 ```shell
-$ pip install beautifulsoup4
+pip install beautifulsoup4
 ```
 
 Ahora crearemos nuestro segundo script.
