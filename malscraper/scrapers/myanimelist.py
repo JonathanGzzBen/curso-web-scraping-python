@@ -66,10 +66,10 @@ def get_anime_data(anime_url):
     anime_rank_container.sup.clear()
     anime_rank = anime_rank_container.get_text().strip()
     return {
-        'anime_title': anime_title,
-        'image_url': anime_image_url,
-        'anime_rank': anime_rank,
-        'anime_score': anime_score,
-        'anime_type': anime_type,
-        'anime_episodes': anime_episodes
+        'title': anime_title,
+        'url': anime_image_url,
+        'rank': anime_rank,
+        'score': anime_score,
+        'type': anime_type,
+        'episodes': anime_episodes
     }
