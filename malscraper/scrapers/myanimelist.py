@@ -39,7 +39,7 @@ def get50Animes(offset = 0):
 def get_anime_data(anime_url):
     bs = getSoup(anime_url)
     general_information_container = bs.find('td', {'class': 'borderClass'})
-    anime_image_url = general_information_container.find('img')["src"]
+    anime_image_url = general_information_container.find('img')["data-src"]
     return {
         'image_url': anime_image_url
     }
