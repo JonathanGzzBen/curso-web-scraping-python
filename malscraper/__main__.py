@@ -1,6 +1,6 @@
 from .scrapers import myanimelist as mal
 
-animes_first_50_skip_2 = mal.get50Animes(2)
-anime = animes_first_50_skip_2[0]
+animes_first_50 = mal.get50Animes()
 
-print(mal.get_anime_data(anime["url"]))
+for anime in animes_first_50:
+    print(mal.get_anime_data(anime["url"]))
