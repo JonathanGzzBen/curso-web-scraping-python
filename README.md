@@ -121,7 +121,7 @@ Para empezar, la primera línea de código que nos puede generar
 un problema es esta:
 
 ```python
-html = urlopen('http://www.pythonscraping.com/pages/page1.html'))
+html = urlopen('http://www.pythonscraping.com/pages/page1.html')
 ```
 
 Aquí pueden salir mal dos cosas:
